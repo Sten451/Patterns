@@ -1,8 +1,8 @@
 import quopri
-from tkinter import W
 from light_framework.req import GetRequests, PostRequests
 from views import NotFound404
-
+import json
+from datetime import datetime
 
 class Framework:
 
@@ -43,8 +43,13 @@ class Framework:
             data = PostRequests().get_request_params(environ)
             req['data'] = data
             #печатаем данные из формы
-            print(Framework.decode_value(data))
-    
+            with open('question.txt', 'a', encoding="utf-8") as f:
+                # получаем словарь
+                dict = Framework.decode_value(data)
+                str_dict = json.dumps(dict, ensure_ascii=False)
+                current_date = str(datetime.now())
+                f.write(current_date + str_dict + '\n')
+            
         if method == 'GET':
             request_params = GetRequests().get_request_params(environ)
             req['request_params'] = request_params
