@@ -16,6 +16,7 @@ def other_front(request):
 
 fronts = [secret_front, other_front]
 
+
 routes = {
     '/': Index(),
     '/flowers/': Flowers(),

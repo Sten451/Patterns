@@ -61,10 +61,20 @@ img {
 }
 /*-- //Reset Code --*/
 body{
-	background:url('../../images/16.jpg') no-repeat 0px 0px;
-	background-size:cover;
+	
 	min-height:699px;
 }
+
+img.back {
+	min-height:699px;
+	position: fixed;
+  	top: 0;
+ 	left: 0;
+	width: 100%;
+	z-index: -1;
+
+}
+
 .main{
 	width:65%;
 	margin:70px auto 0px auto;
