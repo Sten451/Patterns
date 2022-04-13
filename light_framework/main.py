@@ -1,8 +1,6 @@
 from importlib.resources import path
 from os import path
 import quopri
-import json
-from datetime import datetime
 from light_framework.req import GetRequests, PostRequests
 from views import NotFound404
 from components.content_types import CONTENT_TYPES_MAP
@@ -32,13 +30,7 @@ class Framework:
         if method == 'POST':
             data = PostRequests().get_request_params(environ)
             req['data'] = data
-            #печатаем данные из формы
-            with open('question.txt', 'a', encoding="utf-8") as f:
-                # получаем словарь
-                dict = Framework.decode_value(data)
-                str_dict = json.dumps(dict, ensure_ascii=False)
-                current_date = str(datetime.now())
-                f.write(current_date + str_dict + '\n')
+            
             
         if method == 'GET':
             request_params = GetRequests().get_request_params(environ)
@@ -66,7 +58,6 @@ class Framework:
         request = {}
         for front in self.fronts_lst:
             front(request)
-            print("69", front(request))
         start_response(code, [('Content-Type', content_type)])
         return [body]
 

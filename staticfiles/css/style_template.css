@@ -23,7 +23,7 @@ h1{
 
 .phone{
     margin-top: 30px;
-    margin-left: 350px;
+    margin-left: 250px;
 }
 
 ul.br > li, ul.foo > li, a {
@@ -163,3 +163,20 @@ a.click:hover {
     color:deepskyblue; 
 }
 
+.contact_header {
+    margin-left: 50px;
+    margin-top: 30px;
+}
+
+input {
+    margin-top: 10px;
+}
+
+.text-field_input {
+    width: 500px;
+    height: 200px;
+}
+
+.logout {
+    margin-left: 10px;
+}

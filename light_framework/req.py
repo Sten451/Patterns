@@ -15,7 +15,6 @@ class GetRequests:
     def get_request_params(environ):
         query_string = environ['QUERY_STRING']
         request_params = GetRequests.parse_input_data(query_string)
-        print (request_params)
         return request_params
 
 

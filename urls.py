@@ -1,5 +1,5 @@
 from datetime import date
-from views import Index, Flowers, Cake, Meeting, Air, Contact 
+from views import Index, Flowers, Cake, Login, Meeting, Air, Contact, Registration, Login, LK, Logout
 
 
 # front controller
@@ -24,5 +24,11 @@ routes = {
     '/cake/': Cake(),
     '/meeting/': Meeting(),
     '/contact/': Contact(),
+    '/registration/': Registration(),
+    '/login/': Login(),
+    '/cabinet/': LK(),
+     '/logout/': Logout(),
+
+
 
 }
