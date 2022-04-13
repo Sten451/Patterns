@@ -180,3 +180,9 @@ input {
 .logout {
     margin-left: 10px;
 }
+
+button.buy {
+    width: 70px;
+    height: 30px;
+    margin-top: 10px;
+}

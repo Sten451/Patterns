@@ -13,6 +13,10 @@
                 <ul>
                     {% for flower in flowers %}
                     <li>{{ flower }}. Цена {{ flowers.get(flower) }} рублей.</li>
+                    {% if active_user %}
+                    <button class="buy" type="button" value="{'item': {{ flower }}, 'price': {{ flowers.get(flower) }}}">Заказать</button>
+                    {% endif %}
+                    <hr>
                     {% endfor %}
                 
                 

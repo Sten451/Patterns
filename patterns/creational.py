@@ -13,11 +13,11 @@ class Client(User):
 
 class Engine:
     def __init__(self):
-        #self.teachers = []
-        self.clients = [{"login": "sten", "password": "123"},{"login": "mad", "password": "123"}]
+        self.clients = [{"login": "sten", "password": "123", "order":[]},{"login": "mad", "password": "123", "order":[]}]
         self.active_user = ''
-        #self.courses = []
-        #self.categories = []
+        self.flowers = {'Роза': 100, 'Лилия': 500, 'Тюльпан': 50, 'Хризонтема': 70, 'Составление букета': 500}
+        self.airs = {'Плюшевый мишка': 500, 'Набор воздушных шаров': 700, 'Собачка': 300, 'Кошечка': 200}
+        self.cakes = {'Раффаэлло': 500, 'Ферреро роше': 700, 'Мерси ассорти': 300, 'Коркунов': 200}
 
     @staticmethod
     def create_user(type_):

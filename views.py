@@ -16,15 +16,15 @@ class Index:
 
 class Flowers:
     def __call__(self, request):
-        return '200 OK', render('flowers.html', flowers={'Роза': 100, 'Лилия': 500, 'Тюльпан': 50, 'Хризонтема': 70, 'Составление букета': 500})
+        return '200 OK', render('flowers.html', flowers = site.flowers, active_user = site.active_user)
         
 class Air:
     def __call__(self, request):
-        return '200 OK', render('airs.html', airs={'Плюшевый мишка': 500, 'Набор воздушных шаров': 700, 'Собачка': 300, 'Кошечка': 200})
+        return '200 OK', render('airs.html', airs = site.airs, active_user = site.active_user)
 
 class Cake:
     def __call__(self, request):
-        return '200 OK', render('cakes.html', cakes={'Раффаэлло': 500, 'Ферреро роше': 700, 'Мерси ассорти': 300, 'Коркунов': 200})
+        return '200 OK', render('cakes.html', cakes=site.cakes, active_user = site.active_user)
 
 class Meeting:
     def __call__(self, request):
@@ -32,7 +32,10 @@ class Meeting:
 
 class LK:
     def __call__(self, request):
-        return '200 OK', render('lk.html', active_user = site.active_user)
+        for client in site.clients:
+            if client['login'] == site.active_user:
+                return '200 OK', render('lk.html', active_user = site.active_user, client=client['order'])
+
 
 class Logout:
     def __call__(self, request):
@@ -49,7 +52,7 @@ class Contact:
                 str_dict = json.dumps(dict, ensure_ascii=False)
                 current_date = str(datetime.now())
                 f.write(current_date + str_dict + '\n')
-        return '200 OK', render('contact.html')
+        return '200 OK', render('contact.html', active_user = site.active_user)
     
     @staticmethod
     def decode_value(data):
@@ -64,12 +67,9 @@ class Contact:
 class Login:
     def __call__(self, request):
         if request['method'] == 'POST':
-            #print("request", request['data']['login'])
-            #print(site.clients)
             for client in site.clients:
                 if request['data']['login'] == client['login'] and request['data']['password'] == client['password']:
-                    logger.log('Пользователь вошел в систему')
-                    #print("user found and log")
+                    logger.log(f"Пользователь {request['data']['login']} вошел в систему")
                     site.active_user = client['login']
                     return '200 OK', render('index.html', active_user = site.active_user)
 
@@ -85,18 +85,11 @@ class Registration:
                 if request['data']['login'] == client['login']:
                     logger.log('Такой Пользователь уже существует')
                     return '200 OK', render('reg.html')
-            #print(site.clients)
             site.clients.append({"login":request['data']['login'], "password":request['data']['password']})    
-            #print("new", site.clients)
+            logger.log(f"Пользователь {request['data']['login']} успешно зарегистрирован.")
             site.active_user = request['data']['login']
             return '200 OK', render('index.html', active_user = site.active_user)
-
-                    
-
-
-
-
-            print("request", request)
+         
         return '200 OK', render('reg.html')
 
 class NotFound404:
