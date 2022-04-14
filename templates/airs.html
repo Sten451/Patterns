@@ -15,7 +15,7 @@
                     {% for air in airs %}
                     <li>{{ air }}. Цена {{ airs.get(air) }} рублей.</li>
                     {% if active_user %}
-                        <button class="buy" type="button" value="{'item': {{ air }}, 'price': {{ airs.get(air) }}}">Заказать</button>
+                    <a href="cart?item={{ air }}&price={{ airs.get(air) }}"><button class="buy" type="button">Заказать</button></a>
                     {% endif %}
                     <hr>
                     {% endfor %} 

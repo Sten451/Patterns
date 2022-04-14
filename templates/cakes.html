@@ -15,7 +15,7 @@
                     {% for cake in cakes %}
                     <li>{{ cake }}. Цена {{ cakes.get(cake) }} рублей.</li>
                     {% if active_user %}
-                    <button class="buy" type="button" value="{'item': {{ cake }}, 'price': {{ cakes.get(cake) }}}">Заказать</button>
+                    <a href="cart?item={{ cake }}&price={{ cakes.get(cake) }}"><button class="buy" type="button">Заказать</button></a>
                     {% endif %}
                     <hr>
                     {% endfor %}

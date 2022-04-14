@@ -7,13 +7,24 @@
 
             <div class="content">
                 <h2>Ваш личный кабинет, {{ active_user }}</h2>
-                {% if client %}
-                    <h3>Ваши заказы:</h3>
+                {% if cart %}
+                    <h3>Ваш заказ:</h3>
+                    <ol type="1">
+                    {% for item in cart %}
+                        <li class="lk"><b>Наименование товара:</b> {{ item['item'] }} <b>Цена:</b> {{ item['price'] }} рублей</li>
+                        <hr>     
+                    {% endfor %}
+                    <a href="#"><button type="">Повторить заказ</button></a> 
+                    <h3>Итого: </h3>            
+                    <form method="post" action="order">
+                        <button type="submit" name="order_param" value="[{{ active_user }}, {{ cart }}]">Отправить заказ</button>
+                    </form>
+                    </ol>
                 {% else %}
-                    <h3>У Вас нет заказов</h3>
+                    <h3>{{ status }}</h3>
                 {% endif %}
                 
-                {{ client }}
+                
             
             
             </div>
