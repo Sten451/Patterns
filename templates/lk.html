@@ -14,7 +14,9 @@
                         <li class="lk"><b>Наименование товара:</b> {{ item['item'] }} <b>Цена:</b> {{ item['price'] }} рублей</li>
                         <hr>     
                     {% endfor %}
-                    <a href="#"><button type="">Повторить заказ</button></a> 
+                    <form method="post" action="copy_cart">
+                    <button type="submit" name="copy_param" value="{{ cart }}">Повторить заказ</button>
+                    </form>
                     <h3>Итого: </h3>            
                     <form method="post" action="order">
                         <button type="submit" name="order_param" value="[{{ active_user }}, {{ cart }}]">Отправить заказ</button>
@@ -23,8 +25,6 @@
                 {% else %}
                     <h3>{{ status }}</h3>
                 {% endif %}
-                
-                
             
             
             </div>
