@@ -11,13 +11,14 @@
                 <p>У нас есть возможность заказать понравившиеся цветы или готовый букет.</p>
                 <p>После заказа наш менеджер свяжется с Вами для уточнения деталей и оплаты, а также адреса доставки. К букету может прилагаться записка.</p>
                 <ul>
-                    {% for flower in flowers %}
-                    <li>{{ flower }}. Цена {{ flowers.get(flower) }} рублей.</li>
+                    {% for flower in objects_list %}
+                    <li>{{ flower }}. Цена {{ objects_list.get(flower) }} рублей.</li>
                     {% if active_user %}
-                    <a href="cart?item={{ flower }}&price={{ flowers.get(flower) }}"><button class="buy" type="button">Заказать</button></a>
+                    <a href="cart?item={{ flower }}&price={{ objects_list.get(flower) }}"><button class="buy" type="button">Заказать</button></a>
                     {% endif %}
                     <hr>
                     {% endfor %}
+                    
                 
                 
             </ul> 

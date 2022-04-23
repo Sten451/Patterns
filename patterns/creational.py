@@ -1,25 +1,29 @@
 import copy
 import ast
-from datetime import datetime
+from pydoc import text
 import quopri
+from patterns.behavior import ConsoleWriter, FileWriter
+
 
 class User:
     pass
 
-# администратор
-class Admin(User):
-    pass
 
 # клиент
 class Client(User):
     def __init__(self):
         self.active_client = ''
-        self.clients = [{"login": "sten", "password": "123"},{"login": "mad", "password": "123"}]
+        self.active_admin = False        
+        self.clients = [{"login": "sten", "password": "123", "admin": True}, {"login": "mad", "password": "123", "admin": False}]
     
 
     def login_client(self,  list_clients, login, password):
         for client in list_clients:
             if login == client['login'] and password == client['password']:
+                if client['admin']:
+                    #print("loging Admin") 
+                    self.active_admin = True
+                    print(self.active_admin)
                 return True
         return False    
 
@@ -84,15 +88,17 @@ class SingletonByName(type):
 
 
 class Logger(metaclass=SingletonByName):
-    def __init__(self, name):
+    def __init__(self, name, writer=ConsoleWriter(), savelog = FileWriter('admin/log.txt')):
         self.name = name
+        self.writer = writer
+        self.savelog = savelog
 
-    @staticmethod
-    def log(text):
-        print('log--->', text)
-        with open('admin/log.txt', 'a', encoding='utf-8') as f:
-            current_date = str(datetime.now())
-            f.write(current_date + ' ' + text + '\n')
-            
+    def log(self, text):
+        text = f'log---> {text}'
+        self.writer.write(text)
+    
+    def log_in_file(self, text):
+        self.savelog.write(text)
+
 
 

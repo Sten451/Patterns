@@ -12,10 +12,10 @@
                 <p>После заказа наш менеджер свяжется с Вами для уточнения деталей оплаты и адреса доставки.</p>
                 <p><b>Наш ассортимент:</b></p>
                 <ul>
-                    {% for cake in cakes %}
-                    <li>{{ cake }}. Цена {{ cakes.get(cake) }} рублей.</li>
+                    {% for cake in objects_list %}
+                    <li>{{ cake }}. Цена {{ objects_list.get(cake) }} рублей.</li>
                     {% if active_user %}
-                    <a href="cart?item={{ cake }}&price={{ cakes.get(cake) }}"><button class="buy" type="button">Заказать</button></a>
+                    <a href="cart?item={{ cake }}&price={{ objects_list.get(cake) }}"><button class="buy" type="button">Заказать</button></a>
                     {% endif %}
                     <hr>
                     {% endfor %}
