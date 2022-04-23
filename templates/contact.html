@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+			
+			{% include "menu_header.html" %}
+
+            <div class="content">
+                <h2>Заполните форму обратной связи</h2>
+                <form action="" method="post">
+                    <fieldset>
+                        <legend></legend>
+                        <p><label for="theme" class="title">Тема:</label>
+                             <select name="theme" id="theme">
+                                <option value="order">Заказ</option>
+                                <option value="funding">Проблема с оплатой</option>
+                                <option value="registration">Проблема с регистрацией</option>
+                                <option value="other">Нет вопроса в списке</option>
+                             </select></p>
+                        
+                        <p><label class="title" for="message">Сообщение:</label>
+                             <textarea class="text-field_input" type="text" name="message" id="message"></textarea> </p>
+                           
+                             <p><label class="title" for="email">Ваш email</label>
+                                <input type="email" name="email" id="email">     </p>
+                        
+                    </fieldset>
+                <div class="submit"><input type="submit" value="Отправить" /></div>
+                </form>
+            
+            
+            </div>
+
+
+			{% endblock %}
