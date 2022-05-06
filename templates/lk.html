@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+			
+			{% include "menu_header.html" %}
+
+            <div class="content">
+                <h2>Ваш личный кабинет, {{ active_user }}</h2>
+                {% if admin %}
+                <h3>Статистика сайта:</h3>
+                <h4>Зарегистрированные пользователи:</h4>
+                <ul>
+                    {% for user in all_user %}
+                    <li><b>Юзер:</b> {{ user['name'] }} {{ user['fullname'] }} <b>email</b> {{ user['email'] }}</li>
+                    {% endfor %}
+                </ul>
+                <h4>Заказы:</h4>
+                <ul>
+                    {% for order in all_order %}
+                    <li><b>Дата:</b> {{ order['date'] }} <b>Номер:</b> {{ order['number'] }} <b>Статус:</b> {{ order['status'] }}
+                        <form method="post" action="change_status_order">
+                        <p><label for="theme" class="title">Изменить статус заказа на:</label>
+                               <select name="theme" id="theme">
+                               <option value="{{ order['number'] }}, Ожидает оплату">Ожидает оплату</option>
+                               <option value="{{ order['number'] }}, Оплачен">Оплачен</option>
+                               <option value="{{ order['number'] }}, Отправлен">Отправлен</option>
+                               <option value="{{ order['number'] }}, Отменён">Отменён</option>
+                            </select>
+                                <button type="submit">OK</button>
+                            </form></p>
+                    </li>
+                    <hr>
+                    {% endfor %}
+                </ul>
+                <h4>Обращения:</h4>
+                <ul>
+                    {% for question in all_question %}
+                    <li><b>Дата:</b> {{ question['date'] }} <br><b>Тема:</b> {{ question['title'] }} <br><b>Текст сообщения:</b> {{ question['question'] }} <br><b>Статус:</b> {{ question['status'] }}</li>
+                    <form method="post" action="change_status_question">
+                        <p><label for="theme" class="title">Изменить статус сообщения на:</label>
+                               <select name="theme" id="theme">
+                               <option value="{{ question['id'] }}, Ожидает ответа техподдержки">Ожидает ответа техподдержки</option>
+                               <option value="{{ question['id'] }}, Ответ отправлен пользователю">Ответ отправлен пользователю</option>
+                            </select>
+                                <button type="submit">OK</button>
+                            </form></p>
+                    </li>
+                    <hr>
+                    {% endfor %}
+                </ul>
+                
+                
+                {% elif cart %}
+                    <h3>Ваш заказ:</h3>
+                    <ol type="1">
+                    {% for item in cart %}
+                        <li class="lk"><b>Наименование товара:</b> {{ item['item'] }} <b>Цена:</b> {{ item['price'] }} рублей</li>
+                        <hr>     
+                    {% endfor %}
+                    <form method="post" action="copy_cart">
+                    <button type="submit" name="copy_param" value="{{ cart }}">Повторить заказ</button>
+                    </form>
+                    <h3>Итого: </h3>            
+                    <form method="post" action="order">
+                        <button type="submit" name="order_param" value="{{ cart }}">Отправить заказ</button>
+                    </form>
+                    </ol>
+                {% else %}
+                    <h3>{{ status }}</h3>
+                    
+                {% endif %}
+
+                {% if not admin%}
+                <h3>Мои заказы:</h3>
+                <ul>
+                {% for order in orders %}
+                <li><b>Дата:</b> {{ order['date'] }} <b>Номер:</b> {{ order['number'] }} <b>Статус:</b> {{ order['status'] }}</li>
+                {% endfor %}
+                </ul>
+                <h3>Мои обращения в техподдержку:</h3>
+                <ul>
+                {% for question in questions %}
+                <li><b>Дата:</b> {{ question['date'] }} <b>Тема:</b> {{ question['title'] }} <b>Статус:</b> {{ question['status'] }}</li>
+                {% endfor %}
+                </ul>
+
+
+                {% endif %}
+
+
+            
+            
+            </div>
+
+
+{% endblock %}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+	<link rel="stylesheet" href="{{ static }}css/style_template.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><a href="/">Компания "Помощь в соблазне"</a></h1>
+            {% if active_user %}
+            <div class="phone"><a href="cabinet">WELCOME, {{ active_user }}</a><a class="logout" href="logout">logout</a></div>
+            {% else %}
+            <div class="phone"><a href="login">Войти в ЛК</a></div>
+            {% endif %}
+            {% if active_user %}
+            <div class="contact_header"><a href="contact">Задать вопрос</a></div>
+            {% endif %}
+        </div>
+
+        {% block content %}
+        {% endblock %}
+
+        <div class="footer">
+            <ul class="foo">
+                <li>Букеты</li>
+                <li>Воздушные шары</li>
+                <li>Сладости</li>
+                <li>Мероприятия</li>
+                <li>+7 (952) 124-08-89</li>
+            </ul>
+
+        </div>
+
+</div>
+
+</body>
+</html>
