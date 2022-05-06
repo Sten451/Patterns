@@ -1,8 +1,10 @@
+import os.path
 from light_framework.main import Framework
 from urls import fronts
 from views import routes
 from wsgiref.simple_server import make_server
 from components import settings
+
 
 # class FrameworkDebug(Framework):
 #     def __init__(self, routes, fronts):

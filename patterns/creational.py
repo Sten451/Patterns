@@ -1,43 +1,70 @@
 import copy
 import ast
-from pydoc import text
 import quopri
+from datetime import datetime
+import random
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, BigInteger, DateTime
+from sqlalchemy.ext.declarative import declarative_base
 from patterns.behavior import ConsoleWriter, FileWriter
+from components.source_data import name_logfile
+
+Base = declarative_base()
+
+#класс Юзер
+class User(Base):
+    __tablename__ = 'Users'
+
+    id = Column(Integer, primary_key = True)
+    name = Column(String(20))
+    fullname = Column(String(20))
+    email = Column(String(20))
+    password = Column(String())
+    is_admin = Column(Boolean)
 
 
-class User:
-    pass
+    def __init__(self, name, fullname, email, password, is_admin=False):
+        self.name = name
+        self.fullname = fullname
+        self.email = email
+        self.password = password
+        self.is_admin = is_admin
+        
+
+    def __repr__(self):
+        return f"<User {self.name}>"
+        
+
+#Класс категория продуктов
+class Category_product(Base):
+    __tablename__ = 'Category'
+
+    id = Column(Integer, primary_key = True)
+    category_name = Column(String(20))
+        
+    def __init__(self, category_name):
+        self.category_name = category_name
 
 
-# клиент
-class Client(User):
-    def __init__(self):
-        self.active_client = ''
-        self.active_admin = False        
-        self.clients = [{"login": "sten", "password": "123", "admin": True}, {"login": "mad", "password": "123", "admin": False}]
+#Класс продукты
+class Product_new(Base):
+    __tablename__ = 'Product'
+
+    id = Column(Integer, primary_key = True)
+    name = Column(String())
+    price = Column(BigInteger())
+    category = Column(Integer, ForeignKey('Category.id'))
     
+    def __init__(self, name, price, category):
+        self.name = name
+        self.price = price
+        self.category = category
 
-    def login_client(self,  list_clients, login, password):
-        for client in list_clients:
-            if login == client['login'] and password == client['password']:
-                if client['admin']:
-                    #print("loging Admin") 
-                    self.active_admin = True
-                    print(self.active_admin)
-                return True
-        return False    
-
-class Product:
-    def __init__(self):
-        self.flowers = {'Роза': 100, 'Лилия': 500, 'Тюльпан': 50, 'Хризонтема': 70, 'Составление букета': 500}
-        self.airs = {'Плюшевый мишка': 500, 'Набор воздушных шаров': 700, 'Собачка': 300, 'Кошечка': 200}
-        self.cakes = {'Раффаэлло': 500, 'Ферреро роше': 700, 'Мерси ассорти': 300, 'Коркунов': 200}
 
 
 class CartCreational:
     def __init__(self):
         self.cart = []
-        self.status = "У Вас нет неотправленных заказов"
+        self.status = "Корзина пуста."
 
     def clone(self, dict):
         new_list = dict['copy_param']
@@ -54,10 +81,49 @@ class CartCreational:
         return data.clear()
 
 
+class Order(Base):
+    __tablename__ = 'Order'
+    id = Column(Integer, primary_key = True)
+    number = Column(Integer())
+    created_date = Column(DateTime)
+    status = Column(String())
+    cart = Column(String())
+    user_id = Column(Integer, ForeignKey('Users.id'))
+    
+    def __init__(self, user_id, cart, created_date, status='В обработке'):
+        self.number = random.randint(1, 5000)
+        self.status = status
+        self.user_id = user_id
+        self.cart = cart
+        self.created_date = created_date
+
+
+class Questions_users(Base):
+    __tablename__ = 'Questions'
+    id = Column(Integer, primary_key = True)
+    created_date = Column(DateTime)
+    title = Column(String())
+    question = Column(String())
+    email = Column(String(20))
+    status = Column(String())
+    user_id = Column(Integer, ForeignKey('Users.id'))
+
+
+    def __init__(self, user_id, email, title, question, created_date, status='Отправлено'):
+        self.title = title
+        self.status = status
+        self.user_id = user_id
+        self.email = email
+        self.question = question
+        self.created_date = created_date
+
+
 class Engine:
     def __init__(self):
-        pass
-        
+        self.active_client = ''
+        self.active_admin = False 
+    
+    
     @staticmethod
     def decode_value(data):
         new_data = {}
@@ -88,7 +154,7 @@ class SingletonByName(type):
 
 
 class Logger(metaclass=SingletonByName):
-    def __init__(self, name, writer=ConsoleWriter(), savelog = FileWriter('admin/log.txt')):
+    def __init__(self, name, writer=ConsoleWriter(), savelog = FileWriter(name_logfile)):
         self.name = name
         self.writer = writer
         self.savelog = savelog
@@ -99,6 +165,3 @@ class Logger(metaclass=SingletonByName):
     
     def log_in_file(self, text):
         self.savelog.write(text)
-
-
-

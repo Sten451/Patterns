@@ -16,7 +16,9 @@
             {% else %}
             <div class="phone"><a href="login">Войти в ЛК</a></div>
             {% endif %}
+            {% if active_user %}
             <div class="contact_header"><a href="contact">Задать вопрос</a></div>
+            {% endif %}
         </div>
 
         {% block content %}

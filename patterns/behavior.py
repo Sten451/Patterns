@@ -1,6 +1,5 @@
-from datetime import datetime
-import jsonpickle
 import json
+from datetime import datetime
 from light_framework.templator import render
 
 class ConsoleWriter:
@@ -25,8 +24,7 @@ class BaseSerializer:
         
 
     def save(self):
-        #крякозябры остались странно
-        print("27", self.obj)
+        #крякозябры остались
         return json.dumps(self.obj, ensure_ascii=False)
 
     @staticmethod
